@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+
+<h1><%= event.title %></h1>
+<p><%= attendees.length %> / <%= event.capacity %> registered · <a href="/e/<%= event.slug %>">Public link</a></p>
+
+<% if (attendees.length === 0) { %>
+  <p>No registrations yet.</p>
+<% } else { %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Registered at</th>
+    </tr>
+    <% attendees.forEach((a) => { %>
+      <tr>
+        <td><%= a.name %></td>
+        <td><%= a.email %></td>
+        <td><%= a.createdAt.toLocaleString() %></td>
+      </tr>
+    <% }) %>
+  </table>
+<% } %>
+
+<p><a href="/dashboard">Back to dashboard</a></p>
+
+<%- include("partials/footer") %>

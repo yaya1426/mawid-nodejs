@@ -1,0 +1,32 @@
+<%- include("partials/header") %>
+
+<h1>My events</h1>
+
+<p><a href="/events/new">Create new event</a></p>
+
+<% if (events.length === 0) { %>
+  <p>You have no events yet.</p>
+<% } else { %>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Registered</th>
+      <th>Public link</th>
+      <th>Attendees</th>
+    </tr>
+    <% events.forEach((event) => { %>
+      <tr>
+        <td><%= event.title %></td>
+        <td><%= event.startsAt.toLocaleString() %></td>
+        <td><%= event.location || "—" %></td>
+        <td><%= event.registered %> / <%= event.capacity %></td>
+        <td><a href="/e/<%= event.slug %>">/e/<%= event.slug %></a></td>
+        <td><a href="/events/<%= event.id %>/attendees">View attendees</a></td>
+      </tr>
+    <% }) %>
+  </table>
+<% } %>
+
+<%- include("partials/footer") %>

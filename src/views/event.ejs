@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+
+<h1><%= event.title %></h1>
+<p><%= event.startsAt.toLocaleString() %><% if (event.location) { %> · <%= event.location %><% } %></p>
+
+<% if (error) { %>
+  <p><%= error %></p>
+<% } %>
+
+<% const seatsLeft = event.capacity - event.registered; %>
+<% if (seatsLeft > 0) { %>
+  <p><strong><%= seatsLeft %></strong> seats left</p>
+  <form method="POST" action="/e/<%= event.slug %>/register">
+    <div>
+      <label>Name: <input type="text" name="name" placeholder="Your name" required></label>
+    </div>
+    <div>
+      <label>Email: <input type="email" name="email" placeholder="Your email" required></label>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+<% } else { %>
+  <p><strong>This event is full.</strong></p>
+<% } %>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,8 @@
+<%- include("partials/header") %>
+
+<h1>You're in!</h1>
+<p>You are registered for <strong><%= event.title %></strong>.</p>
+<p><%= event.startsAt.toLocaleString() %><% if (event.location) { %> · <%= event.location %><% } %></p>
+<p><a href="/e/<%= event.slug %>">Back to event page</a></p>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,25 @@
+<%- include("partials/header") %>
+
+<h1>New event</h1>
+
+<% if (error) { %>
+  <p><%= error %></p>
+<% } %>
+
+<form action="/events" method="POST">
+  <div>
+    <label>Title: <input type="text" name="title" required></label>
+  </div>
+  <div>
+    <label>Location: <input type="text" name="location"></label>
+  </div>
+  <div>
+    <label>Starts at: <input type="datetime-local" name="startsAt" required></label>
+  </div>
+  <div>
+    <label>Capacity: <input type="number" name="capacity" min="1" required></label>
+  </div>
+  <button type="submit">Create event</button>
+</form>
+
+<%- include("partials/footer") %>

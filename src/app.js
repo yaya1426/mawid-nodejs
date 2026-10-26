@@ -3,6 +3,7 @@ const express = require("express");
 const helmet = require("helmet");
 const sessionMiddleware = require("./session");
 const authRoutes = require("./routes/auth.routes");
+const eventRoutes = require("./routes/event.routes");
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.get("/", (req, res) => {
 });
 
 app.use(authRoutes);
+app.use(eventRoutes);
 
 module.exports = app;
