@@ -1,15 +1,20 @@
-const express = require('express');
-const app = express()
-const port = 3000
+require("dotenv/config");
+const app = require("./app");
+const prisma = require("./prisma");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const port = process.env.PORT || 3000;
 
-app.get('/contact', (req, res) => {
-  res.send('About page')
-})
+async function start() {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    console.log("Connected to MySQL");
+    app.listen(port, () => {
+      console.log(`Mawid is running on port ${port}`);
+    });
+  } catch (err) {
+    console.error(`Could not connect to MySQL: ${err.message}`);
+    process.exit(1);
+  }
+}
 
-app.listen(port, () => {
-  console.log(`Mawid is running on port ${port}`)
-})
+start();

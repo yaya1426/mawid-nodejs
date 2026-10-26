@@ -1,0 +1,11 @@
+<%- include("partials/header") %>
+
+<h1>Mawid</h1>
+
+<% if (user) { %>
+  <p>Welcome, <%= user.name %>! <a href="/dashboard">Go to your dashboard</a></p>
+<% } else { %>
+  <p>Create events, share a link, and collect RSVPs with a seat cap.</p>
+<% } %>
+
+<%- include("partials/footer") %>
