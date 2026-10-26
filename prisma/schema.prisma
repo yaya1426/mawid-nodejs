@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(100)
+  email        String   @unique @db.VarChar(255)
+  passwordHash String   @map("password_hash") @db.VarChar(255)
+  createdAt    DateTime @default(now()) @map("created_at")
+  events       Event[]
+
+  @@map("users")
+}
+
+model Event {
+  id            Int            @id @default(autoincrement())
+  organizerId   Int            @map("organizer_id")
+  slug          String         @unique @db.VarChar(120)
+  title         String         @db.VarChar(200)
+  location      String?        @db.VarChar(255)
+  startsAt      DateTime       @map("starts_at")
+  capacity      Int
+  createdAt     DateTime       @default(now()) @map("created_at")
+  organizer     User           @relation(fields: [organizerId], references: [id], onDelete: Cascade)
+  registrations Registration[]
+
+  @@map("events")
+}
+
+model Registration {
+  id        Int      @id @default(autoincrement())
+  eventId   Int      @map("event_id")
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, email])
+  @@map("registrations")
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   @db.MediumText
+  expiresAt DateTime @map("expires_at")
+
+  @@map("sessions")
+}
